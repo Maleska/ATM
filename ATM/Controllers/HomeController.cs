@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,15 @@ namespace ATM.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
+        {
+            InventarioEntities db = new InventarioEntities();
+            var data = db.sp_getAllInvetory().ToList();
+            ViewBag.InvList = data;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(Inventarios inventario)
         {
             return View();
         }

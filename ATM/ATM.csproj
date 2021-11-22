@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,7 +133,50 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Inventario.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioModal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventarioModal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioModal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioModal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventarioModal.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Inventarios.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\LoginModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoginModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoginModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoginModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rol.cs">
+      <DependentUpon>LoginModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_getAllInvetory_Result.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuarios.cs">
+      <DependentUpon>LoginModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -133,26 +184,70 @@
     <Content Include="App_Data\ATM_log.ldf">
       <DependentUpon>ATM.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\TextFile1.txt" />
+    <Content Include="Content\4.1.1\css\bootstrap.min.css" />
+    <Content Include="Content\all.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\menu-bar.css" />
+    <Content Include="Content\datatable\dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\InventarioModal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventarioModal.edmx</DependentUpon>
+      <LastGenOutput>InventarioModal.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\InventarioModal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventarioModal.edmx</DependentUpon>
+      <LastGenOutput>InventarioModal.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LoginModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LoginModel.edmx</DependentUpon>
+      <LastGenOutput>LoginModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LoginModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LoginModel.edmx</DependentUpon>
+      <LastGenOutput>LoginModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\3.2.1\jquery.min.js" />
+    <Content Include="Scripts\4.1.1\js\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\LoginModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LoginModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\LoginModel.edmx.diagram">
+      <DependentUpon>LoginModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\InventarioModal.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InventarioModal.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\InventarioModal.edmx.diagram">
+      <DependentUpon>InventarioModal.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\datatable\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\menu-bars.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -170,7 +265,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -184,6 +281,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
