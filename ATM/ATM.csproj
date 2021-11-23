@@ -193,6 +193,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\menu-bar.css" />
     <Content Include="Content\datatable\dataTables.min.css" />
+    <Content Include="Content\img\add.png" />
+    <Content Include="Content\img\edit.png" />
+    <Content Include="Content\img\remove.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -237,6 +240,7 @@
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -248,6 +252,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\menu-bars.js" />
+    <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

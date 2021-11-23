@@ -13,6 +13,9 @@ $("#linkInv").click(function (e) {
     }
 
 });
+$("#btnAddItem").click(function (e) {
+    $('#exampleModal').modal('show');
+});
 function cliclInv() {
     if ($("#ContInv").is(":visible")) {
         //$("#ContInv")

@@ -15,5 +15,7 @@ namespace ATM.Models
         public int cantidad { get; set; }
 
         public bool activo { get; set; }
+        public string CodigoBarras { get; set; }
+        public string id { get; set; }
     }
 }

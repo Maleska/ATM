@@ -18,5 +18,7 @@ namespace ATM.Models
         public string descripcion { get; set; }
         public Nullable<int> cantidad { get; set; }
         public System.DateTime creado { get; set; }
+        public string CB { get; set; }
+        public Nullable<bool> activo { get; set; }
     }
 }

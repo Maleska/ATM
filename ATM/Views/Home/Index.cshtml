@@ -11,8 +11,10 @@
 <link href="~/Content/datatable/dataTables.min.css" rel="stylesheet" />
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/modal.js"></script>
 <script src="~/Scripts/menu-bars.js"></script>
 <script src="~/Scripts/datatable/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/functions.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <div id="wrapper" class="active">
@@ -88,12 +90,16 @@
                     </div>
 
                     <div id="ContInvList" class="container" hidden>
-                        <table id="myTable">
+                        <label>Agregar un nuevo artículo</label>
+                        @*<img src="~/Content/img/add.png" width="25" height="25"  data-toggle="modal" data-target="#exampleModal"/>*@
+                        <input type="button" src="~/Content/img/add.png" width="25" height="25" id="btnAddItem" data-toggle="modal" data-target="#exampleModal" />
+                        <table id="myTable" width="100%">
                             <thead>
                                 <tr>
-                                    <td>Descripción</td>
-                                    <td>Cantidad</td>
-                                    <td>Función</td>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Código de barras</th>
+                                    <th>Función</th>
                                 </tr>
                             </thead>
                             <tbody style="width:100%">
@@ -102,7 +108,12 @@
                                     <tr>
                                         <td>@item.descripcion</td>
                                         <td>@item.cantidad</td>
-                                        <td>Agregar botones</td>
+                                        <td>@item.CB</td>
+                                        <td>
+
+                                            <img src="~/Content/img/remove.png" width="25" height="25" />
+                                            <img src="~/Content/img/edit.png" width="25" height="25" onclick="getValues(@item.Id)" />
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -201,10 +212,92 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
+                    {
+                        <label>Descripción</label>
+                        <p> @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })</p>
+                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                        <br />
+                        <label>Cantidad</label>
+                        <p>
+                            @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0" })
+                        </p>
+                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                        <br />
+                        <label>Código de Barras</label>
+                        <p>
+                            @Html.TextBoxFor(m => m.cantidad, new { @class = "form-control" })
+                        </p>
+                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Edit-->
+    <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @using (Html.BeginForm("UpdateItem", "Home", FormMethod.Post ))
+                {
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><h2>Actualizar Artículo</h2></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
 
+                        <label>Descripción</label>
+                        <p> @Html.TextBoxFor(m => m.nombre, new { @class = "form-control", id = "txbEditDesc" })</p>
+                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                        <br />
+                        <label>Cantidad</label>
+                        <p>
+                            @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0", id = "txbEditCant" })
+                        </p>
+                        <p>@Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" }) </p>
+                        <br />
+                        <label>Código de Barras</label>
+                        <p>
+                            @Html.TextBoxFor(m => m.CodigoBarras, new { @class = "form-control", id = "txbEditCB" })
+                        </p>
+                        <p>@Html.ValidationMessageFor(m => m.CodigoBarras, "", new { @class = "text-danger" }) </p>
+                        @Html.HiddenFor( m=> m.id)
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 <script>
+
     $(document).ready(function () {
         $('#myTable').DataTable();
     });
+    $("#btnAddItem").click(function (e) {
+        e.preventDefault();
+        //$('#exampleModal').show(true);
+        $('#exampleModal').modal('show')
+    });
+
 </script>
