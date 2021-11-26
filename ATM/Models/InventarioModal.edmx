@@ -14,11 +14,34 @@
           <Property Name="cantidad" Type="int" />
           <Property Name="creado" Type="datetime" Nullable="false" />
           <Property Name="CB" Type="nvarchar" MaxLength="50" />
+          <Property Name="emei" Type="nvarchar" MaxLength="50" />
+          <Property Name="idTipo" Type="int" />
+          <Property Name="Marca" Type="nvarchar" MaxLength="50" />
           <Property Name="activo" Type="bit" />
         </EntityType>
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="marcas" Type="nvarchar" MaxLength="50" />
+          <Property Name="activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tipos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="20" />
+          <Property Name="activo" Type="bit" />
+        </EntityType>
+        <Function Name="ps_getMarcas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_getAllInvetory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_getAllTipos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="InventarioModelStoreContainer">
           <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipos" EntityType="Self.Tipos" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -34,17 +57,51 @@
           <Property Name="creado" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="activo" Type="Boolean" />
+          <Property Name="emei" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idTipo" Type="Int32" />
+          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="InventarioEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Inventario" EntityType="Self.Inventario" />
           <FunctionImport Name="sp_getAllInvetory" ReturnType="Collection(InventarioModel.sp_getAllInvetory_Result)" />
+          <EntitySet Name="Tipos" EntityType="InventarioModel.Tipos" />
+          <EntitySet Name="Marcas" EntityType="InventarioModel.Marcas" />
+          <FunctionImport Name="ps_getMarcas" ReturnType="Collection(InventarioModel.ps_getMarcas_Result)" />
+          <FunctionImport Name="sp_getAllTipos" ReturnType="Collection(InventarioModel.sp_getAllTipos_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_getAllInvetory_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="descripcion" Nullable="true" />
           <Property Type="Int32" Name="cantidad" Nullable="true" />
-          <Property Type="DateTime" Name="creado" Nullable="false" Precision="23" />
-          <Property Type="String" Name="CB" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="activo" Nullable="true" />
+          <Property Type="String" Name="emei" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <EntityType Name="Tipos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="marcas" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" />
+        </EntityType>
+        <ComplexType Name="ps_getMarcas_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="marcas" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="activo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getAllTipos_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="20" />
           <Property Type="Boolean" Name="activo" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -56,6 +113,9 @@
           <EntitySetMapping Name="Inventario">
             <EntityTypeMapping TypeName="InventarioModel.Inventario">
               <MappingFragment StoreEntitySet="Inventario">
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="idTipo" ColumnName="idTipo" />
+                <ScalarProperty Name="emei" ColumnName="emei" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
                 <ScalarProperty Name="CB" ColumnName="CB" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -68,11 +128,48 @@
           <FunctionImportMapping FunctionImportName="sp_getAllInvetory" FunctionName="InventarioModel.Store.sp_getAllInvetory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="InventarioModel.sp_getAllInvetory_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="creado" ColumnName="creado" />
-                <ScalarProperty Name="CB" ColumnName="CB" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="emei" ColumnName="emei" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Tipos">
+            <EntityTypeMapping TypeName="InventarioModel.Tipos">
+              <MappingFragment StoreEntitySet="Tipos">
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marcas">
+            <EntityTypeMapping TypeName="InventarioModel.Marcas">
+              <MappingFragment StoreEntitySet="Marcas">
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="marcas" ColumnName="marcas" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ps_getMarcas" FunctionName="InventarioModel.Store.ps_getMarcas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.ps_getMarcas_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="marcas" ColumnName="marcas" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getAllTipos" FunctionName="InventarioModel.Store.sp_getAllTipos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.sp_getAllTipos_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
               </ComplexTypeMapping>
             </ResultMapping>

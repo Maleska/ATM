@@ -6,6 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="3221df022f214d6abcbf4b4344e1c5a5" Name="Diagram1">
         <EntityTypeShape EntityType="InventarioModel.Inventario" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventarioModel.Tipos" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="InventarioModel.Marcas" Width="1.5" PointX="2.625" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -33,3 +33,12 @@ function valid(id) {
         document.getElementById("ContInvList").hidden = false;
     }
 }
+function containerView(id) {
+    if (id == 1) {
+        document.getElementById("ContUser").hidden = false;
+        document.getElementById("ContUsrList").hidden = true;
+    } else if (id == 2) {
+        document.getElementById("ContUser").hidden = true;
+        document.getElementById("ContUsrList").hidden = false;
+    }
+}

@@ -13,7 +13,7 @@ namespace ATM.Models
 
         [Required(ErrorMessage ="Favor de agregar una contraseña")]
         [DataType(DataType.Password)]
-        [StringLength(8,ErrorMessage ="La contraseña debe de tener 8 caracteres ",MinimumLength =8)]
+        [StringLength(8,ErrorMessage ="La contraseña debe de tener 6 caracteres ",MinimumLength =6)]
         public string password { get; set; }
 
 

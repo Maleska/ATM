@@ -128,8 +128,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BoletasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -168,10 +170,43 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LoginModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Marcas.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Personal.cs">
+      <DependentUpon>PersonalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ps_getMarcas_Result.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Rol.cs">
       <DependentUpon>LoginModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllInvetory_Result.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_getAllPeople_Result.cs">
+      <DependentUpon>PersonalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_getAllTipos_Result.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tipos.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuarios.cs">
@@ -195,11 +230,13 @@
     <Content Include="Content\datatable\dataTables.min.css" />
     <Content Include="Content\img\add.png" />
     <Content Include="Content\img\edit.png" />
+    <Content Include="Content\img\logo ATM.png" />
     <Content Include="Content\img\remove.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="mejoras.txt" />
     <Content Include="Models\InventarioModal.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>InventarioModal.edmx</DependentUpon>
@@ -220,6 +257,16 @@
       <DependentUpon>LoginModel.edmx</DependentUpon>
       <LastGenOutput>LoginModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\PersonalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PersonalModel.edmx</DependentUpon>
+      <LastGenOutput>PersonalModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PersonalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PersonalModel.edmx</DependentUpon>
+      <LastGenOutput>PersonalModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\3.2.1\jquery.min.js" />
     <Content Include="Scripts\4.1.1\js\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -238,6 +285,14 @@
     <Content Include="Models\InventarioModal.edmx.diagram">
       <DependentUpon>InventarioModal.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\PersonalModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PersonalModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PersonalModel.edmx.diagram">
+      <DependentUpon>PersonalModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatable\jquery.dataTables.min.js" />
     <Content Include="Scripts\functions.js" />
@@ -269,6 +324,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Boletas\Index.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

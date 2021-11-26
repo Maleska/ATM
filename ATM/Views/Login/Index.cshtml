@@ -1,6 +1,6 @@
 ﻿@model ATM.Models.Login
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
@@ -28,8 +28,14 @@
 <br />
 <br />
 <div class="container">
+    <center>
+        <img src="~/Content/img/logo ATM.png" style="width:25%; height:15%; background-color:white" />
+        <br />
+    </center>
+    <br />
     <div class="d-flex justify-content-center">
-        <div class="card" style="width: 350px;height: 250px;">
+
+        <div class="card" style="width: 350px;height: 310px;">
             <div class="card-header">
                 <br />
                 <h3>Iniciar sesión</h3>
@@ -52,15 +58,12 @@
                         <p> @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })</p>
 
                     </div>
-                    <br />
-                    <br />
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
                         @*<input type="password" class="form-control" placeholder="password">*@
                         @Html.PasswordFor(m => m.password, new { @class = "form-control", placeholder = "password" })
-                        <br />
                         <p> @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })</p>
                     </div>
                     @*<div class="row align-items-center remember">ooo

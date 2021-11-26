@@ -1,7 +1,7 @@
 ﻿@model ATM.Models.Inventarios
 @*@model IEnumerable<ATM.Models.Inventario>*@
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Inicio";
 
 }
 
@@ -25,13 +25,13 @@
             <li class="sidebar-brand"><a id="menu-toggle" href="#">Menu<span id="main_icon" class="glyphicon glyphicon-align-justify"></span></a></li>
         </ul>
         <ul class="sidebar-nav" id="sidebar">
-            <li><a onclick="cliclInv()">Inventario<span class="sub_icon glyphicon glyphicon-link" id="linkInv"></span></a></li>
+            <li><a href="@Url.Action("Index","Home")">Inventario<span class="sub_icon glyphicon glyphicon-link" id="linkInv"></span></a></li>
             @*<ul class="sidebar-nav" id="sidebar">
-                    <li><a>link1<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-                    <li><a>link2<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-                </ul>*@
+            <li><a>link1<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+            <li><a>link2<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+        </ul>*@
             <li><a>Boletas<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-            <li><a>Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+            <li> <a href="@Url.Action("Index","Usuarios")">Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
         </ul>
     </div>
 
@@ -52,7 +52,7 @@
                                 <li class="active"><a href="#"></a></li>
                                 <li><a href="#" onclick="valid(1)">Nuevo</a></li>
                                 <li><a href="#" onclick="valid(2)">Listado de inventario</a></li>
-                                <li><a href="#">Page 3</a></li>
+                                @*<li><a href="#">Page 3</a></li>*@
                             </ul>
                         </div>
                     </nav>
@@ -62,15 +62,38 @@
                         <br />
                         <br />
                         <div class="container-fluid">
-                            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                            @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
                             {
 
                                 <div class=" container">
                                     <label>Descripción</label>
                                     <br />
-                                    @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+                                    @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
                                     <br />
-                                    @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" })
+                                </div>
+                                <div class=" container">
+                                    <label>Tipo</label>
+                                    <br />
+                                    @Html.DropDownListFor(m => m.tipo, (IEnumerable
+                                         <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhone()", style = "width:25%" })
+                                    @*@Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+                <br />
+                @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })*@
+                                </div>
+                                <div class="container">
+                                    <label>Marca</label>
+                                    <br />
+                                    @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", style = "width:25%" })
+                                    <br />
+                                    @Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="container" id="divEmei" hidden>
+                                    <label>IMEI</label>
+                                    <br />
+                                    @Html.TextBoxFor(m => m.emei, new { @class = "form-control", style = "width:25%" })
+                                    <br />
+                                    @Html.ValidationMessageFor(m => m.emei, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="container">
                                     <label>Cantidad</label>
@@ -80,6 +103,7 @@
                                     @Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" })
                                 </div>
                                 <br />
+                                @Html.HiddenFor(m => m.activo ,new {Value =true})
                                 <div>
                                     <center>
                                         <input type="submit" class="btn btn-lg btn-success" style="background-color:green" value="Guardar" />
@@ -90,31 +114,34 @@
                     </div>
 
                     <div id="ContInvList" class="container" hidden>
-                        <label>Agregar un nuevo artículo</label>
-                        @*<img src="~/Content/img/add.png" width="25" height="25"  data-toggle="modal" data-target="#exampleModal"/>*@
-                        <input type="button" src="~/Content/img/add.png" width="25" height="25" id="btnAddItem" data-toggle="modal" data-target="#exampleModal" />
+                        @*<label>Agregar un nuevo artículo</label>
+                        <img src="~/Content/img/add.png" width="25" height="25" onclick="openModal();" id="btnAddItem" data-toggle="modal" data-target="#exampleModal"/>*@
+                       @* <input type="button" src="~/Content/img/add.png" width="25" height="25" id="btnAddItem" data-toggle="modal" data-target="#exampleModal" />*@
                         <table id="myTable" width="100%">
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
                                     <th>Cantidad</th>
-                                    <th>Código de barras</th>
+                                    <th>Tipo</th>
+                                    <th>IMEI</th>
+                                    <th>Marca</th>
                                     <th>Función</th>
                                 </tr>
                             </thead>
                             <tbody style="width:100%">
                                 @foreach (var item in ViewBag.InvList)
                                 {
-                                    <tr>
-                                        <td>@item.descripcion</td>
-                                        <td>@item.cantidad</td>
-                                        <td>@item.CB</td>
-                                        <td>
-
-                                            <img src="~/Content/img/remove.png" width="25" height="25" />
-                                            <img src="~/Content/img/edit.png" width="25" height="25" onclick="getValues(@item.Id)" />
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>@item.descripcion</td>
+                                    <td>@item.cantidad</td>
+                                    <td>@item.nombre</td>
+                                    <td>@item.emei</td>
+                                    <td>@item.Marca</td>
+                                    <td>
+                                        <img src="~/Content/img/remove.png" width="25" height="25" onclick="modalDelete(@item.Id)" />
+                                        <img src="~/Content/img/edit.png" width="25" height="25" onclick="getValues(@item.Id)" />
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -226,20 +253,38 @@
                     @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
                     {
                         <label>Descripción</label>
-                        <p> @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })</p>
-                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                        <p> @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })</p>
+                        <p>@Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" }) </p>
+                        <br />
+
+                        <br />
+                        <div class=" container">
+                            <label>Tipo</label>
+                            <br />
+                            @Html.DropDownListFor(m => m.tipo, (IEnumerable
+                                 <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhone()", style = "width:25%" })
+                        </div>
+                        <br />
+                        <label>Marca</label>
+                        <p>
+                            @Html.TextBoxFor(m => m.Marca, new { @class = "form-control" })
+                        </p>
+                        <p>@Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger" }) </p>
+                        <br />
+                        <div class="container" id="divEmei" hidden>
+                            <label>IMEI</label>
+                            <br />
+                            @Html.TextBoxFor(m => m.emei, new { @class = "form-control", style = "width:25%" })
+                            <br />
+                            @Html.ValidationMessageFor(m => m.emei, "", new { @class = "text-danger" })
+                        </div>
                         <br />
                         <label>Cantidad</label>
                         <p>
                             @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0" })
                         </p>
-                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
-                        <br />
-                        <label>Código de Barras</label>
-                        <p>
-                            @Html.TextBoxFor(m => m.cantidad, new { @class = "form-control" })
-                        </p>
-                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                        <p>@Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" }) </p>
+                        @Html.HiddenFor(m => m.id)
                     }
                 </div>
                 <div class="modal-footer">
@@ -253,7 +298,7 @@
     <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                @using (Html.BeginForm("UpdateItem", "Home", FormMethod.Post ))
+                @using (Html.BeginForm("UpdateItem", "Home", FormMethod.Post))
                 {
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"><h2>Actualizar Artículo</h2></h5>
@@ -264,21 +309,35 @@
                     <div class="modal-body">
 
                         <label>Descripción</label>
-                        <p> @Html.TextBoxFor(m => m.nombre, new { @class = "form-control", id = "txbEditDesc" })</p>
-                        <p>@Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" }) </p>
+                        <p> @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control", id = "txbEditDesc" })</p>
+                        <p>@Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" }) </p>
+                        <br />
+                       
+                            <label>Tipo</label>
+                          
+                            @Html.DropDownListFor(m => m.tipo, (IEnumerable
+                                 <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhoneEdit()", style = "width:25%", name = "tipoEdit",id = "tipoEdit" })
+                        <br />
+                        <label>Marca</label>
+                        <p>
+                            @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", id = "txbEditMarca" })
+                        </p>
+                        <p>@Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger" }) </p>
+                        <br />
+                        <div class="container" id="divImei" hidden>
+                            <label>IMEI</label>
+                            <br />
+                            @Html.TextBoxFor(m => m.emei, new { @class = "form-control", style = "width:25%", id = "txbEditIMEI" })
+                            <br />
+                            @Html.ValidationMessageFor(m => m.emei, "", new { @class = "text-danger" })
+                        </div>
                         <br />
                         <label>Cantidad</label>
                         <p>
-                            @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0", id = "txbEditCant" })
+                            @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0", id = "txbEditCantidad" })
                         </p>
                         <p>@Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" }) </p>
-                        <br />
-                        <label>Código de Barras</label>
-                        <p>
-                            @Html.TextBoxFor(m => m.CodigoBarras, new { @class = "form-control", id = "txbEditCB" })
-                        </p>
-                        <p>@Html.ValidationMessageFor(m => m.CodigoBarras, "", new { @class = "text-danger" }) </p>
-                        @Html.HiddenFor( m=> m.id)
+                        @Html.HiddenFor(m => m.id ,new { id = "txbEditid" })
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -288,16 +347,46 @@
             </div>
         </div>
     </div>
+    <!-- Modal Deleate-->
+    <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @using (Html.BeginForm("DeleteItem", "Home", FormMethod.Post))
+                {
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">Eliminar Artículo</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>¿Esta seguro que desea eliminar el artículo?</label>
+                        @Html.HiddenFor(m => m.id, new { id = "txbDeleatetid" })
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <script>
 
     $(document).ready(function () {
         $('#myTable').DataTable();
     });
-    $("#btnAddItem").click(function (e) {
-        e.preventDefault();
-        //$('#exampleModal').show(true);
-        $('#exampleModal').modal('show')
-    });
+    //$("#btnAddItem").click(function (e) {
+    //    e.preventDefault();
+    //    //$('#exampleModal').show(true);
+    //    $('#exampleModal').modal('show')
+    //});
+    function openModal() {
+        $('#exampleModal').modal('show');
+        $("#exampleModal").modal('show');
+    }
 
 </script>

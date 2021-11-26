@@ -28,10 +28,22 @@ namespace ATM.Models
         }
     
         public virtual DbSet<Inventario> Inventario { get; set; }
+        public virtual DbSet<Tipos> Tipos { get; set; }
+        public virtual DbSet<Marcas> Marcas { get; set; }
     
         public virtual ObjectResult<sp_getAllInvetory_Result> sp_getAllInvetory()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getAllInvetory_Result>("sp_getAllInvetory");
+        }
+    
+        public virtual ObjectResult<ps_getMarcas_Result> ps_getMarcas()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ps_getMarcas_Result>("ps_getMarcas");
+        }
+    
+        public virtual ObjectResult<sp_getAllTipos_Result> sp_getAllTipos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getAllTipos_Result>("sp_getAllTipos");
         }
     }
 }

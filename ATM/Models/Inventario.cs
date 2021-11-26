@@ -20,5 +20,8 @@ namespace ATM.Models
         public System.DateTime creado { get; set; }
         public string CB { get; set; }
         public Nullable<bool> activo { get; set; }
+        public string emei { get; set; }
+        public Nullable<int> idTipo { get; set; }
+        public string Marca { get; set; }
     }
 }

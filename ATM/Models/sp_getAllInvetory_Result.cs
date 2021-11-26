@@ -13,11 +13,12 @@ namespace ATM.Models
     
     public partial class sp_getAllInvetory_Result
     {
-        public int Id { get; set; }
         public string descripcion { get; set; }
         public Nullable<int> cantidad { get; set; }
-        public System.DateTime creado { get; set; }
-        public string CB { get; set; }
         public Nullable<bool> activo { get; set; }
+        public string emei { get; set; }
+        public string Marca { get; set; }
+        public int Id { get; set; }
+        public string nombre { get; set; }
     }
 }
