@@ -28,10 +28,16 @@ namespace ATM.Models
         }
     
         public virtual DbSet<Personal> Personal { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
     
         public virtual ObjectResult<SP_getAllPeople_Result> SP_getAllPeople()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_getAllPeople_Result>("SP_getAllPeople");
+        }
+    
+        public virtual ObjectResult<sp_getAllRol_Result> sp_getAllRol()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getAllRol_Result>("sp_getAllRol");
         }
     }
 }

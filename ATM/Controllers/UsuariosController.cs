@@ -17,6 +17,22 @@ namespace ATM.Controllers
         {
             var data = db.SP_getAllPeople().ToList();
             ViewBag.UsrList = data;
+
+            List<SelectListItem> myList = new List<SelectListItem>();
+            SelectListItem listItem = new SelectListItem();
+          
+            var dataType = db.sp_getAllRol().ToList();
+            foreach (var item in dataType)
+            {
+                listItem.Text = item.rol;
+                listItem.Value = item.Id.ToString();
+                myList.Add(listItem);
+                listItem = new SelectListItem();
+            }
+            ViewBag.RolList = dataType;
+            ViewBag.RolListItem = myList;
+
+
             return View();
         }
 
@@ -47,6 +63,9 @@ namespace ATM.Controllers
 
                     var data = db.SP_getAllPeople().ToList();
                     ViewBag.UsrList = data;
+
+                    var dataType = db.sp_getAllRol().ToList();
+                    ViewBag.RolList = dataType;
                 }
             }
 
@@ -71,6 +90,70 @@ namespace ATM.Controllers
 
                     var data = db.SP_getAllPeople().ToList();
                     ViewBag.InvList = data;
+
+                    var dataType = db.sp_getAllRol().ToList();
+                    ViewBag.RolList = dataType;
+                }
+            }
+            return View("Index");
+        }
+        
+        [HttpGet]
+        public JsonResult getValues(int id)
+        {
+            var rstJson = db.Rol.Where(m => m.Id == id).FirstOrDefault();
+            return Json(rstJson, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult UpdateRol(FormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new ATMEntities())
+                {
+                    var id = Convert.ToInt32(form["IdRolEdit"]);
+                    var rol = db.Rol.FirstOrDefault(m => m.Id == id);
+
+                    rol.rol1= form["txbEditRol"];
+               
+
+                    db.Rol.Attach(rol);
+                    db.Entry(rol).State = EntityState.Modified;
+
+                    db.SaveChanges();
+
+                    var data = db.SP_getAllPeople().ToList();
+                    ViewBag.UsrList = data;
+
+                    var dataType = db.sp_getAllRol().ToList();
+                    ViewBag.RolList = dataType;
+                }
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult deleteRol(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new ATMEntities())
+                {
+                    var inv = db.Rol.FirstOrDefault(m => m.Id == id);
+
+                    inv.active = false;
+
+                    db.Rol.Attach(inv);
+                    db.Entry(inv).State = EntityState.Modified;
+
+                    db.SaveChanges();
+
+                    var data = db.SP_getAllPeople().ToList();
+                    ViewBag.InvList = data;
+
+                    var dataType = db.sp_getAllRol().ToList();
+                    ViewBag.RolList = dataType;
                 }
             }
             return View("Index");

@@ -37,8 +37,14 @@ function containerView(id) {
     if (id == 1) {
         document.getElementById("ContUser").hidden = false;
         document.getElementById("ContUsrList").hidden = true;
+        document.getElementById("ContTypeList").hidden = true;
     } else if (id == 2) {
         document.getElementById("ContUser").hidden = true;
         document.getElementById("ContUsrList").hidden = false;
+        document.getElementById("ContTypeList").hidden = true;
+    } else if (id == 3) {
+        document.getElementById("ContTypeList").hidden = false;
+        document.getElementById("ContUser").hidden = true;
+        document.getElementById("ContUsrList").hidden = true;
     }
 }

@@ -41,201 +41,220 @@
         <div class="page-content inset">
             <div class="row">
                 <div class="col-md-12">
-                    <p class="well lead">Bienvenido</p>
-                    <!-- ////////////////////////////////////////////////////////////-->
-                    <nav class="navbar navbar-inverse1">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                                @*<a class="navbar-brand" href="#">WebSiteName</a>*@
-                            </div>
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="#"></a></li>
-                                <li><a href="#" onclick="valid(1)">Nuevo</a></li>
-                                <li><a href="#" onclick="valid(2)">Listado de inventario</a></li>
-                                @*<li><a href="#">Page 3</a></li>*@
-                            </ul>
-                        </div>
-                    </nav>
-                    <!--////////////////////////////////////////////////////////////-->
-                    <div class="container" id="ContInv">
 
-                        <br />
-                        <br />
-                        <div class="container-fluid">
-                            @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
-                            {
+                    @using (Html.BeginForm("deleateSesion", "Home", FormMethod.Post))
+                    {
+                        <p class="well lead">
+                            Bienvenido @HttpContext.Current.Session["User"]
 
-                                <div class=" container">
-                                    <label>Descripción</label>
-                                    <br />
-                                    @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
-                                    <br />
-                                    @Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" })
+                            <input type="submit" class="btn btn-danger btn-sm" value="Cerrar Sesión" style="float:right" />
+                            @*<input type="submit" class="btn btn-success btn-sm" value="Cerrar sesión" style=" float:right; background-color:red" />*@
+                        </p>
+                     }
+                       
+                        <!-- ////////////////////////////////////////////////////////////-->
+                        <nav class="navbar navbar-inverse1">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    @*<a class="navbar-brand" href="#">WebSiteName</a>*@
                                 </div>
-                                <div class=" container">
-                                    <label>Tipo</label>
-                                    <br />
-                                    @Html.DropDownListFor(m => m.tipo, (IEnumerable
-                                         <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhone()", style = "width:25%" })
-                                    @*@Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="#"></a></li>
+                                    <li><a href="#" onclick="valid(1)">Nuevo</a></li>
+                                    <li><a href="#" onclick="valid(2)">Listado de inventario</a></li>
+                                    @*<li><a href="#">Page 3</a></li>*@
+                                </ul>
+                            </div>
+                        </nav>
+                        <!--////////////////////////////////////////////////////////////-->
+                        <div class="container" id="ContInv">
+
+                            <br />
+                            <br />
+                            <div class="container-fluid">
+                                @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
+                                {
+
+                                    <div class=" container">
+                                        <label>Descripción</label>
+                                        <br />
+                                        @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
+                                        <br />
+                                        @Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class=" container">
+                                        <label>Tipo</label>
+                                        <br />
+                                        @Html.DropDownListFor(m => m.tipo, (IEnumerable
+                                             <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhone()", style = "width:25%" })
+                                        @*@Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
                 <br />
                 @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })*@
-                                </div>
-                                <div class="container">
-                                    <label>Marca</label>
+                                    </div>
+                                    <div class="container">
+                                        <label>Marca</label>
+                                        <br />
+                                        @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", style = "width:25%" })
+                                        <br />
+                                        @Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="container">
+                                        <label>Serie</label>
+                                        <br />
+                                        @Html.TextBoxFor(m => m.serie, new { @class = "form-control", style = "width:25%" })
+                                        <br />
+                                        @Html.ValidationMessageFor(m => m.serie, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="container" id="divEmei" hidden>
+                                        <label>IMEI</label>
+                                        <br />
+                                        @Html.TextBoxFor(m => m.emei, new { @class = "form-control", style = "width:25%" })
+                                        <br />
+                                        @Html.ValidationMessageFor(m => m.emei, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="container">
+                                        <label>Cantidad</label>
+                                        <br />
+                                        @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0" })
+                                        <br />
+                                        @Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" })
+                                    </div>
                                     <br />
-                                    @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", style = "width:25%" })
-                                    <br />
-                                    @Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="container" id="divEmei" hidden>
-                                    <label>IMEI</label>
-                                    <br />
-                                    @Html.TextBoxFor(m => m.emei, new { @class = "form-control", style = "width:25%" })
-                                    <br />
-                                    @Html.ValidationMessageFor(m => m.emei, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="container">
-                                    <label>Cantidad</label>
-                                    <br />
-                                    @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0" })
-                                    <br />
-                                    @Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" })
-                                </div>
-                                <br />
-                                @Html.HiddenFor(m => m.activo ,new {Value =true})
-                                <div>
-                                    <center>
-                                        <input type="submit" class="btn btn-lg btn-success" style="background-color:green" value="Guardar" />
-                                    </center>
-                                </div>
-                            }
-                        </div>
-                    </div>
-
-                    <div id="ContInvList" class="container" hidden>
-                        @*<label>Agregar un nuevo artículo</label>
-                        <img src="~/Content/img/add.png" width="25" height="25" onclick="openModal();" id="btnAddItem" data-toggle="modal" data-target="#exampleModal"/>*@
-                       @* <input type="button" src="~/Content/img/add.png" width="25" height="25" id="btnAddItem" data-toggle="modal" data-target="#exampleModal" />*@
-                        <table id="myTable" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <th>Cantidad</th>
-                                    <th>Tipo</th>
-                                    <th>IMEI</th>
-                                    <th>Marca</th>
-                                    <th>Función</th>
-                                </tr>
-                            </thead>
-                            <tbody style="width:100%">
-                                @foreach (var item in ViewBag.InvList)
-                                {
-                                <tr>
-                                    <td>@item.descripcion</td>
-                                    <td>@item.cantidad</td>
-                                    <td>@item.nombre</td>
-                                    <td>@item.emei</td>
-                                    <td>@item.Marca</td>
-                                    <td>
-                                        <img src="~/Content/img/remove.png" width="25" height="25" onclick="modalDelete(@item.Id)" />
-                                        <img src="~/Content/img/edit.png" width="25" height="25" onclick="getValues(@item.Id)" />
-                                    </td>
-                                </tr>
+                                    @Html.HiddenFor(m => m.activo, new { Value = true })
+                                    <div>
+                                        <center>
+                                            <input type="submit" class="btn btn-lg btn-success" style="background-color:green" value="Guardar" />
+                                        </center>
+                                    </div>
                                 }
-                            </tbody>
-                        </table>
-                    </div>
+                            </div>
+                        </div>
 
-                    <div class="container" hidden>
-                        <div class="row">
-                            <!-- div da esquerda -->
-                            <!-- Text input CNPJ e Razao Social-->
-                            <div class="col-sm-8 contact-form">
-                                <!-- div da direita -->
-                                <form id="contact" method="post" class="form" role="form">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-md-3 form-group">
-                                            <input class="form-control" id="inputCNPJ" name="CNPJ" placeholder="CNPJ" type="text" required autofocus />
-                                        </div>
-                                        <div class="col-xs-4 col-md-9 form-group">
-                                            <input class="form-control" id="inputrazaosocial" name="razaocosial" placeholder="Razão Social" type="text" />
-                                        </div>
-                                    </div> <!-- fim row -->
-                                    <!-- Text input endereco-->
-                                    <div class="col-xs-4 col-md-12 form-group">
-                                        <div class="controls">
-                                            <input class="form-control" id="inputendereco" name="endereco" placeholder="Endereço" type="text">
-                                        </div>
-                                    </div><!--fim control-group-->
-                                    <br> <!--pulando uma linha -->
-                                    <!-- Text input cidade e estado-->
-                                    <div class="row">
-                                        <div class="col-xs-6 col-md-9 form-group">
-                                            <input class="form-control" id="inputcidade" name="cidade" placeholder="Cidade" type="text" />
-                                        </div>
-                                        <div class="col-xs-4 col-md-3 form-group">
-                                            <select class="form-control" id="selectbasic" name="selectestado">
-                                                <option>Selecione</option>
-                                                <option>AC</option>
-                                                <option>AL</option>
-                                                <option>AP</option>
-                                                <option>AM</option>
-                                                <option>BA</option>
-                                                <option>CE</option>
-                                                <option>DF</option>
-                                                <option>ES</option>
-                                                <option>GO</option>
-                                                <option>MA</option>
-                                                <option>MT</option>
-                                                <option>MS</option>
-                                                <option>MG</option>
-                                                <option>PA</option>
-                                                <option>PB</option>
-                                                <option>PR</option>
-                                                <option>PE</option>
-                                                <option>PI</option>
-                                                <option>RJ</option>
-                                                <option>RN</option>
-                                                <option>RS</option>
-                                                <option>RO</option>
-                                                <option>RR</option>
-                                                <option>SC</option>
-                                                <option>SP</option>
-                                                <option>SE</option>
-                                                <option>TO</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-6 col-md-3 form-group">
-                                            <input class="form-control" id="inputtelefone" name="telefone" placeholder="Telefone" type="text" />
-                                        </div>
-                                        <div class="col-xs-4 col-md-3 form-group">
-                                            <input class="form-control" id="inputcontato" name="contato" placeholder="Contato" type="text" />
-                                        </div>
-                                        <div class="col-xs-4 col-md-6 form-group">
-                                            <input class="form-control" id="inputemail" name="email" placeholder="E-mail" type="text" />
-                                        </div>
-                                    </div><!--fim Text input cidade e estado-->
-                                    <div class="col-xs-4 col-md-12 form-group">
-                                        <div class="controls">
-                                            <textarea class="form-control" id="message" name="message" placeholder="Message" rows="5"></textarea>
-                                        </div>
-                                    </div>
-                                    <br />
+                        <div id="ContInvList" class="container" hidden>
+                            @*<label>Agregar un nuevo artículo</label>
+                <img src="~/Content/img/add.png" width="25" height="25" onclick="openModal();" id="btnAddItem" data-toggle="modal" data-target="#exampleModal"/>*@
+                            @* <input type="button" src="~/Content/img/add.png" width="25" height="25" id="btnAddItem" data-toggle="modal" data-target="#exampleModal" />*@
+                            <table id="myTable" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th>Cantidad</th>
+                                        <th>Tipo</th>
+                                        <th>IMEI</th>
+                                        <th>Marca</th>
+                                        <th>Serie</th>
+                                        <th>Función</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="width:100%">
+                                    @foreach (var item in ViewBag.InvList)
+                                    {
+                                        <tr>
+                                            <td>@item.descripcion</td>
+                                            <td>@item.cantidad</td>
+                                            <td>@item.nombre</td>
+                                            <td>@item.emei</td>
+                                            <td>@item.Marca</td>
+                                            <td>@item.serie</td>
+                                            <td>
+                                                <img src="~/Content/img/remove.png" width="25" height="25" onclick="modalDelete(@item.Id)" />
+                                                <img src="~/Content/img/edit.png" width="25" height="25" onclick="getValues(@item.Id)" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 form-group">
-                                            <button class="btn btn-primary pull-right" type="submit">Salvar</button>
-                                            <button class="btn btn-primary pull-right" type="submit">Limpar</button>
-                                            <!--<button class="btn btn-primary pull-right" type="submit">Enviar</button>-->
+                        <div class="container" hidden>
+                            <div class="row">
+                                <!-- div da esquerda -->
+                                <!-- Text input CNPJ e Razao Social-->
+                                <div class="col-sm-8 contact-form">
+                                    <!-- div da direita -->
+                                    <form id="contact" method="post" class="form" role="form">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-3 form-group">
+                                                <input class="form-control" id="inputCNPJ" name="CNPJ" placeholder="CNPJ" type="text" required autofocus />
+                                            </div>
+                                            <div class="col-xs-4 col-md-9 form-group">
+                                                <input class="form-control" id="inputrazaosocial" name="razaocosial" placeholder="Razão Social" type="text" />
+                                            </div>
+                                        </div> <!-- fim row -->
+                                        <!-- Text input endereco-->
+                                        <div class="col-xs-4 col-md-12 form-group">
+                                            <div class="controls">
+                                                <input class="form-control" id="inputendereco" name="endereco" placeholder="Endereço" type="text">
+                                            </div>
+                                        </div><!--fim control-group-->
+                                        <br> <!--pulando uma linha -->
+                                        <!-- Text input cidade e estado-->
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-9 form-group">
+                                                <input class="form-control" id="inputcidade" name="cidade" placeholder="Cidade" type="text" />
+                                            </div>
+                                            <div class="col-xs-4 col-md-3 form-group">
+                                                <select class="form-control" id="selectbasic" name="selectestado">
+                                                    <option>Selecione</option>
+                                                    <option>AC</option>
+                                                    <option>AL</option>
+                                                    <option>AP</option>
+                                                    <option>AM</option>
+                                                    <option>BA</option>
+                                                    <option>CE</option>
+                                                    <option>DF</option>
+                                                    <option>ES</option>
+                                                    <option>GO</option>
+                                                    <option>MA</option>
+                                                    <option>MT</option>
+                                                    <option>MS</option>
+                                                    <option>MG</option>
+                                                    <option>PA</option>
+                                                    <option>PB</option>
+                                                    <option>PR</option>
+                                                    <option>PE</option>
+                                                    <option>PI</option>
+                                                    <option>RJ</option>
+                                                    <option>RN</option>
+                                                    <option>RS</option>
+                                                    <option>RO</option>
+                                                    <option>RR</option>
+                                                    <option>SC</option>
+                                                    <option>SP</option>
+                                                    <option>SE</option>
+                                                    <option>TO</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3 form-group">
+                                                <input class="form-control" id="inputtelefone" name="telefone" placeholder="Telefone" type="text" />
+                                            </div>
+                                            <div class="col-xs-4 col-md-3 form-group">
+                                                <input class="form-control" id="inputcontato" name="contato" placeholder="Contato" type="text" />
+                                            </div>
+                                            <div class="col-xs-4 col-md-6 form-group">
+                                                <input class="form-control" id="inputemail" name="email" placeholder="E-mail" type="text" />
+                                            </div>
+                                        </div><!--fim Text input cidade e estado-->
+                                        <div class="col-xs-4 col-md-12 form-group">
+                                            <div class="controls">
+                                                <textarea class="form-control" id="message" name="message" placeholder="Message" rows="5"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div> <!-- fim div da direita -->
-                        </div> <!-- fim div da esquerda -->
+                                        <br />
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 form-group">
+                                                <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                                                <button class="btn btn-primary pull-right" type="submit">Limpar</button>
+                                                <!--<button class="btn btn-primary pull-right" type="submit">Enviar</button>-->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> <!-- fim div da direita -->
+                            </div> <!-- fim div da esquerda -->
+                        </div>
+                        @* <p class="well lead">An Experiment using the sidebar (<a href="http://animeshmanglik.name">animeshmanglik.name</a>)</p>*@
                     </div>
-                    @* <p class="well lead">An Experiment using the sidebar (<a href="http://animeshmanglik.name">animeshmanglik.name</a>)</p>*@
-                </div>
             </div>
         </div>
     </div>
@@ -312,11 +331,11 @@
                         <p> @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control", id = "txbEditDesc" })</p>
                         <p>@Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" }) </p>
                         <br />
-                       
-                            <label>Tipo</label>
-                          
-                            @Html.DropDownListFor(m => m.tipo, (IEnumerable
-                                 <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhoneEdit()", style = "width:25%", name = "tipoEdit",id = "tipoEdit" })
+
+                        <label>Tipo</label>
+
+                        @Html.DropDownListFor(m => m.tipo, (IEnumerable
+                             <SelectListItem>)ViewBag.TipoList, new { @class = "form-control", @onchange = "validPhoneEdit()", style = "width:25%", name = "tipoEdit", id = "tipoEdit" })
                         <br />
                         <label>Marca</label>
                         <p>
@@ -324,6 +343,13 @@
                         </p>
                         <p>@Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger" }) </p>
                         <br />
+                        <div class="container">
+                            <label>Serie</label>
+                            <br />
+                            @Html.TextBoxFor(m => m.serie, new { @class = "form-control", style = "width:25%",id="txbEditSerie" })
+                            <br />
+                            @Html.ValidationMessageFor(m => m.serie, "", new { @class = "text-danger" })
+                        </div>
                         <div class="container" id="divImei" hidden>
                             <label>IMEI</label>
                             <br />
@@ -337,7 +363,7 @@
                             @Html.TextBoxFor(m => m.cantidad, new { @type = "number", @min = "0", @class = "form-control", style = "width:25%", Value = "0", id = "txbEditCantidad" })
                         </p>
                         <p>@Html.ValidationMessageFor(m => m.cantidad, "", new { @class = "text-danger" }) </p>
-                        @Html.HiddenFor(m => m.id ,new { id = "txbEditid" })
+                        @Html.HiddenFor(m => m.id, new { id = "txbEditid" })
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -388,5 +414,5 @@
         $('#exampleModal').modal('show');
         $("#exampleModal").modal('show');
     }
-
+    
 </script>

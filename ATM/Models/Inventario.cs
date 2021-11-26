@@ -23,5 +23,6 @@ namespace ATM.Models
         public string emei { get; set; }
         public Nullable<int> idTipo { get; set; }
         public string Marca { get; set; }
+        public string serie { get; set; }
     }
 }

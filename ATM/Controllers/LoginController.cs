@@ -13,6 +13,11 @@ namespace ATM.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            var sessiones = this.HttpContext.Session["User"];
+            if (sessiones != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

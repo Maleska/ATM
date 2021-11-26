@@ -11,15 +11,10 @@ namespace ATM.Models
 {
     using System;
     
-    public partial class sp_getAllInvetory_Result
+    public partial class sp_getAllRol_Result
     {
-        public string descripcion { get; set; }
-        public Nullable<int> cantidad { get; set; }
-        public Nullable<bool> activo { get; set; }
-        public string emei { get; set; }
-        public string Marca { get; set; }
         public int Id { get; set; }
-        public string nombre { get; set; }
-        public string serie { get; set; }
+        public string rol { get; set; }
+        public Nullable<bool> active { get; set; }
     }
 }

@@ -12,27 +12,43 @@ namespace ATM.Controllers
     {
         public ActionResult Index()
         {
-            InventarioEntities db = new InventarioEntities();
-            var data = db.sp_getAllInvetory().ToList();
-            ViewBag.InvList = data;
+            ////////////////////////////////
+            //////////validamos session activa////////////////
+            ///
+            var sessiones = this.HttpContext.Session["User"];
 
-            var dataM = db.ps_getMarcas().ToList();
-            ViewBag.MarcaList = dataM;
-
-            var dataT = db.sp_getAllTipos().ToList();
-           
-
-            List<SelectListItem> myList = new List<SelectListItem>();
-            SelectListItem listItem = new SelectListItem();
-            foreach (var item in dataT)
+            if (sessiones != null)
             {
-                listItem.Text = item.nombre;
-                listItem.Value = item.Id.ToString();
-                myList.Add(listItem);
-                listItem = new SelectListItem();
+
+                InventarioEntities db = new InventarioEntities();
+                var data = db.sp_getAllInvetory().ToList();
+                ViewBag.InvList = data;
+
+                var dataM = db.ps_getMarcas().ToList();
+                ViewBag.MarcaList = dataM;
+
+                var dataT = db.sp_getAllTipos().ToList();
+
+                List<SelectListItem> myList = new List<SelectListItem>();
+                SelectListItem listItem = new SelectListItem();
+                foreach (var item in dataT)
+                {
+                    listItem.Text = item.nombre;
+                    listItem.Value = item.Id.ToString();
+                    myList.Add(listItem);
+                    listItem = new SelectListItem();
+                }
+                ViewBag.TipoList = myList;
+
+               
+
+                return View();
+
             }
-            ViewBag.TipoList = myList;
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
 
         [HttpPost]
@@ -103,6 +119,8 @@ namespace ATM.Controllers
             }
             ViewBag.TipoList = myList;
 
+            
+
             return View("Index");
         }
         [HttpPost]
@@ -121,7 +139,8 @@ namespace ATM.Controllers
                     inv.CB = form["CodigoBarras"];
                     inv.descripcion = form["nombre"];
                     inv.Marca = form["Marca"];
-                    inv.emei = form["emi"];
+                    inv.emei = form["emei"];
+                    inv.serie = form["serie"];
                     inv.idTipo = Convert.ToInt32(selectedValueTipo);
 
                     db.Inventario.Attach(inv);
@@ -145,6 +164,19 @@ namespace ATM.Controllers
                         listItem = new SelectListItem();
                     }
                     ViewBag.TipoList = myList;
+
+                    myList = new List<SelectListItem>();
+                    listItem = new SelectListItem();
+
+                    var dataType = db.sp_getAllRol().ToList();
+                    foreach (var item in dataType)
+                    {
+                        listItem.Text = item.rol;
+                        listItem.Value = item.Id.ToString();
+                        myList.Add(listItem);
+                        listItem = new SelectListItem();
+                    }
+                    ViewBag.RolList = myList;
                 }
             }
             return View("Index");
@@ -193,6 +225,13 @@ namespace ATM.Controllers
             
             return Json(rstJson, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult deleateSesion()
+        {
+            HttpContext.Session.Abandon();
+            return RedirectToAction("Index", "Login");
+        }
+
         //[HttpPost]
         //public ActionResult removeItem(FormCollection form)
         //{

@@ -17,9 +17,19 @@
           <Property Name="activo" Type="bit" />
           <Property Name="created" Type="datetime" />
         </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rol" Type="nvarchar" MaxLength="50" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
         <Function Name="SP_getAllPeople" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_getAllRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="PersonalModelStoreContainer">
           <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -40,16 +50,29 @@
         <EntityContainer Name="ATMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Personal" EntityType="Self.Personal" />
           <FunctionImport Name="SP_getAllPeople" ReturnType="Collection(PersonalModel.SP_getAllPeople_Result)" />
+          <FunctionImport Name="sp_getAllRol" ReturnType="Collection(PersonalModel.sp_getAllRol_Result)" />
+          <EntitySet Name="Rol" EntityType="PersonalModel.Rol" />
         </EntityContainer>
         <ComplexType Name="SP_getAllPeople_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="apellidos" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="telefono" Nullable="true" MaxLength="10" />
-          <Property Type="Int32" Name="idRol" Nullable="true" />
-          <Property Type="Boolean" Name="activo" Nullable="true" />
-          <Property Type="DateTime" Name="created" Nullable="true" Precision="23" />
+          <Property Type="String" Name="rol" Nullable="true" MaxLength="50" />
+          </ComplexType>
+        <ComplexType Name="sp_getAllRol_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="rol" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="active" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rol1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -76,12 +99,28 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellidos" ColumnName="apellidos" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="idRol" ColumnName="idRol" />
-                <ScalarProperty Name="activo" ColumnName="activo" />
-                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getAllRol" FunctionName="PersonalModel.Store.sp_getAllRol">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PersonalModel.sp_getAllRol_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="active" ColumnName="active" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="PersonalModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="rol1" ColumnName="rol" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

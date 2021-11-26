@@ -29,10 +29,86 @@ function modalDelete(id) {
     $("#txbDeleatetid").val(id)
     $("#ModalDelete").modal('show');
 }
+
 function modalDeleteUser(id) {
     $("#id").val(id)
     $("#modalDeleteUser").modal('show');
 }
+
+function modaldeleateEditRol(id) {
+    $.ajax({
+        type: "GET",
+        traditional: true,
+        async: false,
+        cache: false,
+        // url: '@Url.Action("getValues","Home")',
+        url: '/Usuarios/deleteRol',
+        context: document.body,
+        data: { id: id },
+        success: function (result) {
+            var sreturn = result;
+            $("#txbEditRol").val(sreturn['rol1']);
+            $("#Id").val(sreturn['Id']);
+           
+            $("#ModalEditTipo").modal('show');
+        },
+        error: function (xhr) {
+            //debugger;
+            console.log(xhr.responseText);
+            alert("Ocurrio un error");
+        }
+    });
+}
+
+function modalEditRol(id) {
+    $.ajax({
+        type: "GET",
+        traditional: true,
+        async: false,
+        cache: false,
+        // url: '@Url.Action("getValues","Home")',
+        url: '/Usuarios/getValues',
+        context: document.body,
+        data: { id: id },
+        success: function (result) {
+            var sreturn = result;
+            $("#txbEditRol").val(sreturn['rol1']);
+            $("#IdRolEdit").val(sreturn['Id']);
+
+            $("#ModalEditTipo").modal('show');
+        },
+        error: function (xhr) {
+            //debugger;
+            console.log(xhr.responseText);
+            alert("Ocurrio un error");
+        }
+    });
+}
+
+function modalRol(id) {
+    $.ajax({
+        type: "GET",
+        traditional: true,
+        async: false,
+        cache: false,
+        // url: '@Url.Action("getValues","Home")',
+        url: '/Usuarios/getValues',
+        context: document.body,
+        data: { id: id },
+        success: function (result) {
+            var sreturn = result;
+            $("#txbEditRol").val(sreturn['rol1']);
+
+            $("#ModalEditTipo").modal('show');
+        },
+        error: function (xhr) {
+            //debugger;
+            console.log(xhr.responseText);
+            alert("Ocurrio un error");
+        }
+    });
+}
+
 function getValueUser(id) {
     $.ajax({
         type: "GET",

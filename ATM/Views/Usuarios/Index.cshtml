@@ -52,6 +52,7 @@
                                 <li class="active"><a href="#"></a></li>
                                 <li><a href="#" onclick="containerView(1)">Nuevo Usuario</a></li>
                                 <li><a href="#" onclick="containerView(2)">Listado de Usuarios</a></li>
+                                <li><a href="#" onclick="containerView(3)">Tipo de Usuarios</a></li>
                                 @*<li><a href="#">Page 3</a></li>*@
                             </ul>
                         </div>
@@ -84,21 +85,23 @@
                                     </div>
                                 </div>
                                 <div class=" row">
-                                    <div class="col-xs-6 col-md-4 form-group">
+                                    <div class="col-sm-2 form-group">
                                         <label><span>Tiene huella dactilar</span></label>
                                         <p>
                                             No
                                             @* @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", style = "width:75%", })*@
                                         </p>
                                     </div>
-                                    <div class="col-xs-6 col-md-4 form-group">
-                                       <input type="button" class="form-control btn btn-info btn-sm" value="Registrar" />
+                                    <div class="col-sm-2 form-group">
+                                        <input type="button" class="btn btn-info btn-sm" value="Registrar" />
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-4 col-md-4 form-group">
-                                        <input type="submit" value="Guardar" class="btn btn-success form-control" />
-                                    </div>
+                                <div class="container-fluid">
+                                    <center>
+                                        <div class="form-group">
+                                            <input type="submit" value="Guardar" class="btn btn-sm-4 btn-success" />
+                                        </div>
+                                    </center>
                                 </div>
                             }
                         </div>
@@ -110,7 +113,8 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Apellido</th>
-                                    <th>Telléfono</th>
+                                    <th>Teléfono</th>
+                                    <th>Rol</th>
                                     <th>eventos </th>
                                 </tr>
                             </thead>
@@ -121,6 +125,7 @@
                                         <td>@item.nombre</td>
                                         <td>@item.apellidos</td>
                                         <td>@item.telefono</td>
+                                        <td></td>
                                         <td>
                                             <img src="~/Content/img/remove.png" width="25" height="25" onclick="modalDeleteUser(@item.Id)" />
                                             <img src="~/Content/img/edit.png" width="25" height="25" onclick="getValueUser(@item.Id)" />
@@ -129,7 +134,33 @@
                                 }
                             </tbody>
                         </table>
+                    </div>
 
+                    <div id="ContTypeList" class="container" hidden>
+                        <div class="row">
+                            <table id="TableRol" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Rol</th>
+                                        <th>eventos </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="width:100%">
+                                    @foreach (var item in ViewBag.RolList)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.rol</td>
+                                            <td>
+                                                <img src="~/Content/img/remove.png" width="25" height="25" onclick="modalEditRol(@item.Id)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <img src="~/Content/img/edit.png" width="25" height="25" onclick="modalEditRol(@item.Id)" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="container" hidden>
@@ -224,6 +255,11 @@
                             @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", id = "txbEditTel" })
                         </p>
                         <p>@Html.ValidationMessageFor(m => m.telefono, "", new { @class = "text-danger" }) </p>
+                        <label>Rol</label>
+                        <p>
+                            @Html.DropDownListFor(m => m.idRol, (IEnumerable
+                                                 <SelectListItem>)ViewBag.RolListItem, new { @class = "form-control", @onchange = "validPhone()", style = "width:25%" })
+                        </p>
                         @Html.HiddenFor(m => m.Id)
                     </div>
                     <div class="modal-footer">
@@ -258,9 +294,40 @@
             </div>
         </div>
     </div>
+    <!-- Modal Edit-->
+    <div class="modal fade" id="ModalEditTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @using (Html.BeginForm("UpdateRol", "Usuarios", FormMethod.Post))
+                {
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">Actualizar Roles</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <label>Rol</label>
+                        <p> @Html.TextBox("txbEditRol","",new  { @class = "form-control" })</p>
+                        <br />
+                        
+                        @Html.Hidden("IdRolEdit")
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <script>
     $(document).ready(function () {
         $('#myTable').DataTable();
+        $("#TableRol").DataTable();
     });
 </script>

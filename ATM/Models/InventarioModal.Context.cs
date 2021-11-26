@@ -45,5 +45,10 @@ namespace ATM.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getAllTipos_Result>("sp_getAllTipos");
         }
+    
+        public virtual ObjectResult<sp_getAllRol_Result> sp_getAllRol()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getAllRol_Result>("sp_getAllRol");
+        }
     }
 }

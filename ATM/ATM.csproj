@@ -195,12 +195,15 @@
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rol.cs">
-      <DependentUpon>LoginModel.tt</DependentUpon>
+      <DependentUpon>PersonalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllInvetory_Result.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_getAllPeople_Result.cs">
+      <DependentUpon>PersonalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_getAllRol_Result.cs">
       <DependentUpon>PersonalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllTipos_Result.cs">

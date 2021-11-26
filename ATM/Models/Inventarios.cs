@@ -21,5 +21,6 @@ namespace ATM.Models
         public string Marca { get; set; }
         public string tipo { get; set; }
         public string emei { get; set; }
+        public string serie { get; set; }
     }
 }
