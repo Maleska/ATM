@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="InventarioModel.Inventario" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InventarioModel.Tipos" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="InventarioModel.Marcas" Width="1.5" PointX="2.625" PointY="2.75" />
+        <EntityTypeShape EntityType="InventarioModel.Boleteras" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

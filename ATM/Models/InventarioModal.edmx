@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="InventarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Boleteras">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="Inicio" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fin" Type="nvarchar" MaxLength="50" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Firma" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Inventario">
           <Key>
             <PropertyRef Name="Id" />
@@ -17,8 +28,8 @@
           <Property Name="emei" Type="nvarchar" MaxLength="50" />
           <Property Name="idTipo" Type="int" />
           <Property Name="Marca" Type="nvarchar" MaxLength="50" />
-          <Property Name="serie" Type="nvarchar" MaxLength="50" />
           <Property Name="activo" Type="bit" />
+          <Property Name="Serie" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="Marcas">
           <Key>
@@ -38,9 +49,9 @@
         </EntityType>
         <Function Name="ps_getMarcas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_getAllInvetory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_getAllRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_getAllTipos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="InventarioModelStoreContainer">
+          <EntitySet Name="Boleteras" EntityType="Self.Boleteras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tipos" EntityType="Self.Tipos" Schema="dbo" store:Type="Tables" />
@@ -63,6 +74,7 @@
           <Property Name="idTipo" Type="Int32" />
           <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="serie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Serie" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="InventarioEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Inventario" EntityType="Self.Inventario" />
@@ -72,6 +84,7 @@
           <FunctionImport Name="ps_getMarcas" ReturnType="Collection(InventarioModel.ps_getMarcas_Result)" />
           <FunctionImport Name="sp_getAllTipos" ReturnType="Collection(InventarioModel.sp_getAllTipos_Result)" />
           <FunctionImport Name="sp_getAllRol" ReturnType="Collection(InventarioModel.sp_getAllRol_Result)" />
+          <EntitySet Name="Boleteras" EntityType="InventarioModel.Boleteras" />
         </EntityContainer>
         <ComplexType Name="sp_getAllInvetory_Result">
           <Property Type="String" Name="descripcion" Nullable="true" />
@@ -81,7 +94,7 @@
           <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="serie" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Serie" Nullable="true" MaxLength="25" />
         </ComplexType>
         <EntityType Name="Tipos">
           <Key>
@@ -114,6 +127,17 @@
           <Property Type="String" Name="rol" Nullable="true" MaxLength="50" />
           <Property Type="Boolean" Name="active" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Boleteras">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="Inicio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Firma" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -123,7 +147,7 @@
           <EntitySetMapping Name="Inventario">
             <EntityTypeMapping TypeName="InventarioModel.Inventario">
               <MappingFragment StoreEntitySet="Inventario">
-                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
                 <ScalarProperty Name="Marca" ColumnName="Marca" />
                 <ScalarProperty Name="idTipo" ColumnName="idTipo" />
                 <ScalarProperty Name="emei" ColumnName="emei" />
@@ -146,7 +170,7 @@
                 <ScalarProperty Name="Marca" ColumnName="Marca" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -186,15 +210,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_getAllRol" FunctionName="InventarioModel.Store.sp_getAllRol">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="InventarioModel.sp_getAllRol_Result">
+          <EntitySetMapping Name="Boleteras">
+            <EntityTypeMapping TypeName="InventarioModel.Boleteras">
+              <MappingFragment StoreEntitySet="Boleteras">
+                <ScalarProperty Name="Firma" ColumnName="Firma" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="rol" ColumnName="rol" />
-                <ScalarProperty Name="active" ColumnName="active" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

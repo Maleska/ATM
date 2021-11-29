@@ -12,18 +12,13 @@ namespace ATM.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Inventario
+    public partial class Boleteras
     {
         public int Id { get; set; }
-        public string descripcion { get; set; }
-        public Nullable<int> cantidad { get; set; }
-        public System.DateTime creado { get; set; }
-        public string CB { get; set; }
-        public Nullable<bool> activo { get; set; }
-        public string emei { get; set; }
-        public Nullable<int> idTipo { get; set; }
-        public string Marca { get; set; }
-        public string serie { get; set; }
-        public string Serie { get; set; }
+        public Nullable<int> IdUsuario { get; set; }
+        public string Inicio { get; set; }
+        public string Fin { get; set; }
+        public System.DateTime Created { get; set; }
+        public string Firma { get; set; }
     }
 }

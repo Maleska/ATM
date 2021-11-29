@@ -58,7 +58,9 @@
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="apellidos" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="telefono" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="rol" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idRol" Nullable="true" />
+          <Property Type="Boolean" Name="activo" Nullable="true" />
+          <Property Type="DateTime" Name="created" Nullable="true" Precision="23" />
           </ComplexType>
         <ComplexType Name="sp_getAllRol_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -99,7 +101,9 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellidos" ColumnName="apellidos" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="created" ColumnName="created" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

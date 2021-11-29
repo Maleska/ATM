@@ -135,6 +135,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Boleteras.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Inventario.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
@@ -204,7 +207,7 @@
       <DependentUpon>PersonalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllRol_Result.cs">
-      <DependentUpon>PersonalModel.tt</DependentUpon>
+      <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllTipos_Result.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>

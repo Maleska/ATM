@@ -17,6 +17,8 @@ namespace ATM.Models
         public string nombre { get; set; }
         public string apellidos { get; set; }
         public string telefono { get; set; }
-        public string rol { get; set; }
+        public Nullable<int> idRol { get; set; }
+        public Nullable<bool> activo { get; set; }
+        public Nullable<System.DateTime> created { get; set; }
     }
 }

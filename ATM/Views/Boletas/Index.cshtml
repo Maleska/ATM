@@ -1,4 +1,4 @@
-﻿
+﻿@model ATM.Models.Boleteras
 @{
     ViewBag.Title = "Index";
 }
@@ -14,5 +14,66 @@
 <script src="~/Scripts/functions.js"></script>
 
 
-<h2>Index</h2>
+<div id="wrapper" class="active">
+    <!-- Sidebar -->
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul id="sidebar_menu" class="sidebar-nav">
+            <li class="sidebar-brand"><a id="menu-toggle" href="#">Menu<span id="main_icon" class="glyphicon glyphicon-align-justify"></span></a></li>
+        </ul>
+        <ul class="sidebar-nav" id="sidebar">
+            <li><a href="@Url.Action("Index","Home")">Inventario<span class="sub_icon glyphicon glyphicon-link" id="linkInv"></span></a></li>
+            @*<ul class="sidebar-nav" id="sidebar">
+                    <li><a>link1<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+                    <li><a>link2<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+                </ul>*@
+            <li><a href="#">Boletas<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+            <li> <a href="@Url.Action("Index","Usuarios")">Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+        </ul>
+    </div>
+    <div id="page-content-wrappponrquer">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+            <div class="row">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("deleateSesion", "Home", FormMethod.Post))
+                    {
+                        <p class="well lead">
+                            Bienvenido @HttpContext.Current.Session["User"]
 
+                            <input type="submit" class="btn btn-danger btn-sm" value="Cerrar Sesión" style="float:right" />
+                            @*<input type="submit" class="btn btn-success btn-sm" value="Cerrar sesión" style=" float:right; background-color:red" />*@
+                        </p>
+                    }
+                    <!-- ////////////////////////////////////////////////////////////-->
+                    <nav class="navbar navbar-inverse1">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                @*<a class="navbar-brand" href="#">WebSiteName</a>*@
+                            </div>
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#"></a></li>
+                                <li><a href="#" onclick="valid(1)">Nueva</a></li>
+                                <li><a href="#" onclick="valid(2)">Historial</a></li>
+                                @*<li><a href="#">Page 3</a></li>*@
+                            </ul>
+                        </div>
+                    </nav>
+                    <!--////////////////////////////////////////////////////////////-->
+                    <div class="container" id="ContBoletera">
+                        <br />
+                        <br />
+                        <div class="container-fluid">
+                            @using (Html.BeginForm("Index", "Boletas", FormMethod.Post))
+                            {
+                                <div class=" container">
+
+                                </div>
+                            }
+                        </div>
+                            </div>
+                    </div>
+             </div>
+        </div>
+    </div>
+</div>

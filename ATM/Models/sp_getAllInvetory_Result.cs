@@ -20,6 +20,6 @@ namespace ATM.Models
         public string Marca { get; set; }
         public int Id { get; set; }
         public string nombre { get; set; }
-        public string serie { get; set; }
+        public string Serie { get; set; }
     }
 }

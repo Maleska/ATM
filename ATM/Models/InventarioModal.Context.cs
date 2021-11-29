@@ -30,6 +30,7 @@ namespace ATM.Models
         public virtual DbSet<Inventario> Inventario { get; set; }
         public virtual DbSet<Tipos> Tipos { get; set; }
         public virtual DbSet<Marcas> Marcas { get; set; }
+        public virtual DbSet<Boleteras> Boleteras { get; set; }
     
         public virtual ObjectResult<sp_getAllInvetory_Result> sp_getAllInvetory()
         {
