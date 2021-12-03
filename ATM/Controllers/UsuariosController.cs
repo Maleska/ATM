@@ -33,6 +33,12 @@ namespace ATM.Controllers
             ViewBag.RolListItem = myList;
 
 
+            //DPFP.Capture.Capture capture = null;
+
+            //capture = new DPFP.Capture.Capture("");
+
+
+
             return View();
         }
 

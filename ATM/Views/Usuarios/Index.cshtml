@@ -41,7 +41,15 @@
         <div class="page-content inset">
             <div class="row">
                 <div class="col-md-12">
-                    <p class="well lead">Bienvenido</p>
+                    @using (Html.BeginForm("deleateSesion", "Home", FormMethod.Post))
+                    {
+                        <p class="well lead">
+                            Bienvenido @HttpContext.Current.Session["User"]
+
+                            <input type="submit" class="btn btn-danger btn-sm" value="Cerrar Sesión" style="float:right" />
+                            @*<input type="submit" class="btn btn-success btn-sm" value="Cerrar sesión" style=" float:right; background-color:red" />*@
+                        </p>
+                    }
                     <!-- ////////////////////////////////////////////////////////////-->
                     <nav class="navbar navbar-inverse1">
                         <div class="container-fluid">

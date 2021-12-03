@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DPFPDevNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=696774c42ee28c57, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\DigitalPersona\One Touch SDK\.NET\Bin\DPFPDevNET.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -177,7 +181,7 @@
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Personal.cs">
-      <DependentUpon>PersonalModel.tt</DependentUpon>
+      <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonalModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -198,13 +202,16 @@
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rol.cs">
-      <DependentUpon>PersonalModel.tt</DependentUpon>
+      <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllInvetory_Result.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_getAllPeople_Result.cs">
-      <DependentUpon>PersonalModel.tt</DependentUpon>
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_getAllRol1_Result.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getAllRol_Result.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>
@@ -215,8 +222,11 @@
     <Compile Include="Models\Tipos.cs">
       <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\user.cs">
+      <DependentUpon>InventarioModal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Usuarios.cs">
-      <DependentUpon>LoginModel.tt</DependentUpon>
+      <DependentUpon>InventarioModal.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

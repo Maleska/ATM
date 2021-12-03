@@ -18,7 +18,7 @@ namespace ATM.Models
         public Nullable<int> IdUsuario { get; set; }
         public string Inicio { get; set; }
         public string Fin { get; set; }
-        public System.DateTime Created { get; set; }
+        public Nullable<System.DateTime> Created { get; set; }
         public string Firma { get; set; }
     }
 }

@@ -39,6 +39,26 @@
           <Property Name="marcas" Type="nvarchar" MaxLength="50" />
           <Property Name="activo" Type="bit" />
         </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="apellidos" Type="nvarchar" MaxLength="50" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="10" />
+          <Property Name="idRol" Type="int" />
+          <Property Name="activo" Type="bit" />
+          <Property Name="created" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rol" Type="nvarchar" MaxLength="50" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
         <EntityType Name="Tipos">
           <Key>
             <PropertyRef Name="Id" />
@@ -47,14 +67,40 @@
           <Property Name="nombre" Type="nvarchar" MaxLength="20" />
           <Property Name="activo" Type="bit" />
         </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="nvarchar" MaxLength="50" />
+          <Property Name="pass" Type="nvarchar" MaxLength="15" />
+          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="nvarchar" MaxLength="50" />
+          <Property Name="pass" Type="nvarchar" MaxLength="15" />
+          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+        </EntityType>
         <Function Name="ps_getMarcas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_getAllInvetory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_getAllPeople" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_getAllRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_getAllTipos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="InventarioModelStoreContainer">
           <EntitySet Name="Boleteras" EntityType="Self.Boleteras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tipos" EntityType="Self.Tipos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -85,6 +131,12 @@
           <FunctionImport Name="sp_getAllTipos" ReturnType="Collection(InventarioModel.sp_getAllTipos_Result)" />
           <FunctionImport Name="sp_getAllRol" ReturnType="Collection(InventarioModel.sp_getAllRol_Result)" />
           <EntitySet Name="Boleteras" EntityType="InventarioModel.Boleteras" />
+          <EntitySet Name="Personal" EntityType="InventarioModel.Personal" />
+          <EntitySet Name="Rol" EntityType="InventarioModel.Rol" />
+          <EntitySet Name="user" EntityType="InventarioModel.user" />
+          <EntitySet Name="Usuarios" EntityType="InventarioModel.Usuarios" />
+          <FunctionImport Name="SP_getAllPeople" ReturnType="Collection(InventarioModel.SP_getAllPeople_Result)" />
+          <FunctionImport Name="sp_getAllRol1" ReturnType="Collection(InventarioModel.sp_getAllRol1_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_getAllInvetory_Result">
           <Property Type="String" Name="descripcion" Nullable="true" />
@@ -138,6 +190,60 @@
           <Property Name="Created" Type="DateTime" Precision="3" />
           <Property Name="Firma" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="idRol" Type="Int32" />
+          <Property Name="activo" Type="Boolean" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rol1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pass" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pass" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <ComplexType Name="SP_getAllPeople_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="idRol" Nullable="true" />
+          <Property Type="Boolean" Name="activo" Nullable="true" />
+          <Property Type="DateTime" Name="created" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_getAllRol1_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="rol" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="active" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -222,6 +328,72 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Personal">
+            <EntityTypeMapping TypeName="InventarioModel.Personal">
+              <MappingFragment StoreEntitySet="Personal">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="InventarioModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="rol1" ColumnName="rol" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="InventarioModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="user1" ColumnName="user" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="InventarioModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_getAllPeople" FunctionName="InventarioModel.Store.SP_getAllPeople">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.SP_getAllPeople_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getAllRol1" FunctionName="InventarioModel.Store.sp_getAllRol">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.sp_getAllRol1_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
